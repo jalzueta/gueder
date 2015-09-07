@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Fundamentos Android</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Hola mundio!</string>
     <string name="action_settings">Settings</string>
+    <string name="weather_system">Cambiar sistema de predicción</string>
 </resources>
