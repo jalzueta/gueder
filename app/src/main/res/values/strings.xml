@@ -1,9 +1,12 @@
 <resources>
-    <string name="app_name">Gueder</string>
+    <string name="app_name">Güedr</string>
 
     <string name="hello_world">Hola mundio!</string>
     <string name="action_settings">Settings</string>
     <string name="weather_system">Cambiar sistema de predicción</string>
     <string name="european_system">Sistema Europeo</string>
     <string name="american_system">Sistema Americano</string>
+    <string name="max_temp_parameter">Temperatura máxima: %.2f ºC</string>
+    <string name="min_temp_parameter">Temperatura mínima: %.2f ºC</string>
+    <string name="humidity_parameter">Humedad: %.0f %%</string>
 </resources>
