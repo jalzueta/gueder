@@ -10,4 +10,6 @@
     <string name="min_temp_parameter" formatted="false">Temperatura mínima: %.2f %s</string>
     <string name="humidity_parameter">Humedad: %.0f %%</string>
     <string name="pref_ringtone_silent">pref_ringtone_silent</string>
+    <string name="updated_preferences">Preferencias actualizadas</string>
+    <string name="undo">Deshacer</string>
 </resources>

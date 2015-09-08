@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -71,13 +73,26 @@ public class ForecastActivity extends AppCompatActivity {
         super.onResume();
 
 
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String stringMetrics = pref.getString(getString(R.string.metric_selection), String.valueOf(SettingsActivity.PREF_CELSIUS));
 
         int metrics = Integer.valueOf(stringMetrics);
+
         if (metrics != mCurrentMetrics){
+            final int previousMetrics = mCurrentMetrics;
             mCurrentMetrics = metrics;
             setForecast(mForecast);
+
+            Snackbar.make(findViewById(android.R.id.content), R.string.updated_preferences, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            pref.edit().putString(getString(R.string.metric_selection), String.valueOf(previousMetrics)).apply();
+                            mCurrentMetrics = previousMetrics;
+                            setForecast(mForecast);
+                        }
+                    })
+                    .show();
         }
     }
 
@@ -98,7 +113,7 @@ public class ForecastActivity extends AppCompatActivity {
         mMaxTemp.setText(String.format(getString(R.string.max_temp_parameter), maxTemp, metricString));
         mMinTemp.setText(String.format(getString(R.string.min_temp_parameter), minTemp, metricString));
         mHumidity.setText(String.format(getString(R.string.humidity_parameter), forecast.getHumidity()));
-        mDescription.setText(String.format(forecast.getDescription()));
+        mDescription.setText(forecast.getDescription());
     }
 
     protected static float toFarenheit(float celsius){
