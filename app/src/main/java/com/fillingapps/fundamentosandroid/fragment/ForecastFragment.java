@@ -35,6 +35,13 @@ public class ForecastFragment extends Fragment {
 
     private int mCurrentMetrics;
 
+    protected static float toFarenheit(float celsius){
+        return (celsius * 1.8f) + 32;
+    }
+    public static Fragment newInstance() {
+        return new ForecastFragment();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +141,4 @@ public class ForecastFragment extends Fragment {
         mDescription.setText(forecast.getDescription());
     }
 
-    protected static float toFarenheit(float celsius){
-        return (celsius * 1.8f) + 32;
-    }
 }
