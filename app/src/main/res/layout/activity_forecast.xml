@@ -8,12 +8,23 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".activity.ForecastActivity">
 
+    <TextView
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/city_example"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/city_margin_bottom"/>
+
     <ImageView
         android:id="@+id/forecast_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/city"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:src="@drawable/sun_cloud" />
 
@@ -22,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/forecast_image"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/forecast_image"
         android:orientation="vertical">
 
         <TextView
