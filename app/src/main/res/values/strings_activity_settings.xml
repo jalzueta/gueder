@@ -1,0 +1,27 @@
+<resources>
+    <string name="title_activity_settings">Ajustes</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_nightmode_title">Modo nocturno</string>
+    <string name="pref_title_nightmode_description">Activa el modo nocturno</string>
+    <string name="night_checkbox">night_checkbox</string>
+
+    <string name="pref_title_metric_selection">Elige Celsius o Farenheit</string>
+    <string name="metric_selection">metric_selection</string>
+
+    <string-array name="pref_list_metrics_titles">
+        <item>Celsius</item>
+        <item>Farenheit</item>
+    </string-array>
+
+    <string-array name="pref_list_metrics_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+</resources>
+

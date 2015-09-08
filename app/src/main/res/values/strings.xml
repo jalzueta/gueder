@@ -6,7 +6,8 @@
     <string name="weather_system">Cambiar sistema de predicción</string>
     <string name="european_system">Sistema Europeo</string>
     <string name="american_system">Sistema Americano</string>
-    <string name="max_temp_parameter">Temperatura máxima: %.2f ºC</string>
-    <string name="min_temp_parameter">Temperatura mínima: %.2f ºC</string>
+    <string name="max_temp_parameter" formatted="false">Temperatura máxima: %.2f %s</string>
+    <string name="min_temp_parameter" formatted="false">Temperatura mínima: %.2f %s</string>
     <string name="humidity_parameter">Humedad: %.0f %%</string>
+    <string name="pref_ringtone_silent">pref_ringtone_silent</string>
 </resources>

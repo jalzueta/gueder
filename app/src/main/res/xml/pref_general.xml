@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="@string/night_checkbox"
+        android:title="@string/pref_title_nightmode_title"
+        android:summary="@string/pref_title_nightmode_description"
+        android:defaultValue="false" />
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+        android:key="@string/metric_selection"
+        android:title="@string/pref_title_metric_selection"
+        android:defaultValue="0"
+        android:entries="@array/pref_list_metrics_titles"
+        android:entryValues="@array/pref_list_metrics_values"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+</PreferenceScreen>
