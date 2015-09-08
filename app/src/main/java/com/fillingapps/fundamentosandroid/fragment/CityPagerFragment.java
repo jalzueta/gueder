@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.fillingapps.fundamentosandroid.R;
+import com.fillingapps.fundamentosandroid.model.Cities;
 
 /**
  * Created by javi on 8/9/15.
@@ -37,13 +38,18 @@ public class CityPagerFragment extends Fragment{
 
     protected class CityPagerFragmentAdapter extends FragmentPagerAdapter {
 
+        private Cities mCities;
+
         public CityPagerFragmentAdapter(FragmentManager fm) {
+
             super(fm);
+            mCities = Cities.getInstance();
         }
 
         @Override
         public Fragment getItem(int i) {
-            return ForecastFragment.newInstance();
+
+            return ForecastFragment.newInstance(mCities.getCities().get(i));
         }
 
         @Override
@@ -53,7 +59,7 @@ public class CityPagerFragment extends Fragment{
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return String.format("Ciudad número %d", position + 1);
+            return mCities.getCities().get(position).getName();
         }
     }
 }

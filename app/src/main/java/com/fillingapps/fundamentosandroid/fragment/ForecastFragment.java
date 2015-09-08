@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.fillingapps.fundamentosandroid.R;
 import com.fillingapps.fundamentosandroid.activity.SettingsActivity;
+import com.fillingapps.fundamentosandroid.model.City;
 import com.fillingapps.fundamentosandroid.model.Forecast;
 
 /**
@@ -25,8 +26,11 @@ import com.fillingapps.fundamentosandroid.model.Forecast;
  */
 public class ForecastFragment extends Fragment {
 
+    private static final String ARG_CITY = "city";
+
     private Forecast mForecast;
 
+    private TextView mCity;
     private ImageView mIcon;
     private TextView mMaxTemp;
     private TextView mMinTemp;
@@ -38,8 +42,15 @@ public class ForecastFragment extends Fragment {
     protected static float toFarenheit(float celsius){
         return (celsius * 1.8f) + 32;
     }
-    public static Fragment newInstance() {
-        return new ForecastFragment();
+    public static Fragment newInstance(City city) {
+        ForecastFragment fragment = new ForecastFragment();
+
+        // Le pasamos un parametro al fragment
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(ARG_CITY, city);
+        fragment.setArguments(arguments);
+
+        return fragment;
     }
 
     @Override
@@ -56,6 +67,7 @@ public class ForecastFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_forecast, container, false);
 
+        mCity = (TextView) root.findViewById(R.id.city);
         mMaxTemp = (TextView) root.findViewById(R.id.max_temp);
         mMinTemp = (TextView) root.findViewById(R.id.min_temp);
         mHumidity = (TextView) root.findViewById(R.id.humidity);
@@ -67,7 +79,9 @@ public class ForecastFragment extends Fragment {
 
         mCurrentMetrics = Integer.valueOf(stringMetrics);
 
-        setForecast(new Forecast(30, 20, 65, "Totalmente despejado", ""));
+        City city = (City) getArguments().getSerializable(ARG_CITY);
+        setForecast(city.getForecast());
+        mCity.setText(city.getName());
 
         return root;
     }

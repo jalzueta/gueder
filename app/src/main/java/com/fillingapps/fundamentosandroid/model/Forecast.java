@@ -1,9 +1,11 @@
 package com.fillingapps.fundamentosandroid.model;
 
+import java.io.Serializable;
+
 /**
  * Created by javi on 7/9/15.
  */
-public class Forecast {
+public class Forecast implements Serializable{
 
     private float mMaxTemp;
     private float mMinTemp;
@@ -63,6 +65,7 @@ public class Forecast {
     public String toString() {
         return getDescription();
     }
+
 
 
 }
