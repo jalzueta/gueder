@@ -28,9 +28,9 @@ public class ForecastFragment extends Fragment {
 
     private static final String ARG_CITY = "city";
 
-    private Forecast mForecast;
+    private City mCity;
 
-    private TextView mCity;
+    private TextView mCityName;
     private ImageView mIcon;
     private TextView mMaxTemp;
     private TextView mMinTemp;
@@ -58,6 +58,10 @@ public class ForecastFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Con esto habilitamos el menu dentro del fragment. La Activity lo incorporará
         setHasOptionsMenu(true);
+
+        if (getArguments() != null){
+            mCity = (City) getArguments().getSerializable(ARG_CITY);
+        }
     }
 
     @Nullable
@@ -67,7 +71,7 @@ public class ForecastFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_forecast, container, false);
 
-        mCity = (TextView) root.findViewById(R.id.city);
+        mCityName = (TextView) root.findViewById(R.id.city);
         mMaxTemp = (TextView) root.findViewById(R.id.max_temp);
         mMinTemp = (TextView) root.findViewById(R.id.min_temp);
         mHumidity = (TextView) root.findViewById(R.id.humidity);
@@ -79,9 +83,8 @@ public class ForecastFragment extends Fragment {
 
         mCurrentMetrics = Integer.valueOf(stringMetrics);
 
-        City city = (City) getArguments().getSerializable(ARG_CITY);
-        setForecast(city.getForecast());
-        mCity.setText(city.getName());
+        mCityName.setText(mCity.getName());
+        setForecast(mCity.getForecast());
 
         return root;
     }
@@ -110,7 +113,6 @@ public class ForecastFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-
         final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String stringMetrics = pref.getString(getString(R.string.metric_selection), String.valueOf(SettingsActivity.PREF_CELSIUS));
 
@@ -119,24 +121,27 @@ public class ForecastFragment extends Fragment {
         if (metrics != mCurrentMetrics){
             final int previousMetrics = mCurrentMetrics;
             mCurrentMetrics = metrics;
-            setForecast(mForecast);
+            setForecast(mCity.getForecast());
 
-            // getView(): metodo para acceder a la raiz de mis vistas
-            Snackbar.make(getView().findViewById(android.R.id.content), R.string.updated_preferences, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.undo, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            pref.edit().putString(getString(R.string.metric_selection), String.valueOf(previousMetrics)).apply();
-                            mCurrentMetrics = previousMetrics;
-                            setForecast(mForecast);
-                        }
-                    })
-                    .show();
+            if (getView() != null){
+                // getView(): metodo para acceder a la raiz de mis vistas
+                Snackbar.make(getView().findViewById(android.R.id.content), R.string.updated_preferences, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.undo, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pref.edit().putString(getString(R.string.metric_selection), String.valueOf(previousMetrics)).apply();
+                                mCurrentMetrics = previousMetrics;
+                                setForecast(mCity.getForecast());
+                            }
+                        })
+                        .show();
+            }
         }
     }
 
     public void setForecast(Forecast forecast){
-        mForecast = forecast;
+        // Por si llaman desde fuera a este metodo, actualizamos el modelo
+        mCity.setForecast(forecast);
 
         float maxTemp = mCurrentMetrics == SettingsActivity.PREF_CELSIUS ? forecast.getMaxTemp() : toFarenheit(forecast.getMaxTemp());
         float minTemp = mCurrentMetrics == SettingsActivity.PREF_CELSIUS ? forecast.getMinTemp() : toFarenheit(forecast.getMinTemp());
