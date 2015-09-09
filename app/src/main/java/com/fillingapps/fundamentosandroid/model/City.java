@@ -2,9 +2,6 @@ package com.fillingapps.fundamentosandroid.model;
 
 import java.io.Serializable;
 
-/**
- * Created by javi on 9/9/15.
- */
 public class City implements Serializable{
 
     private String mName;

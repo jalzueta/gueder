@@ -14,14 +14,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import com.fillingapps.fundamentosandroid.R;
 import com.fillingapps.fundamentosandroid.model.Cities;
 
-/**
- * Created by javi on 8/9/15.
- */
 public class CityPagerFragment extends Fragment{
 
     private Cities mCities;
