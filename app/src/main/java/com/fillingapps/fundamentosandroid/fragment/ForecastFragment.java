@@ -125,7 +125,7 @@ public class ForecastFragment extends Fragment {
 
             if (getView() != null){
                 // getView(): metodo para acceder a la raiz de mis vistas
-                Snackbar.make(getView().findViewById(android.R.id.content), R.string.updated_preferences, Snackbar.LENGTH_INDEFINITE)
+                Snackbar.make(getView(), R.string.updated_preferences, Snackbar.LENGTH_INDEFINITE)
                         .setAction(R.string.undo, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

@@ -3,6 +3,7 @@ package com.fillingapps.fundamentosandroid.activity;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.PorterDuff;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -15,11 +16,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.fillingapps.fundamentosandroid.R;
@@ -49,12 +52,26 @@ public class SettingsActivity extends PreferenceActivity {
 
         // Obtenemos la raiz de nuestra interfaz: esto vale para las Activities
         // Para un fragment se usa getView()
+
+        // root es un FrameLayout (el padre de todas las vistas) -> Explicacion sesion 2 del dia 3 (a las 22:55)
         ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
-        // Obtenemos el primer hijo de la vista principal, en el es donde se inserta la Toolbar
+        // Obtenemos el primer hijo de la vista principal, en el es donde se inserta la Toolbar. Este es un LinearLayout
         ViewGroup rootChild = (ViewGroup) root.getChildAt(0);
-        //Obtenemos la Toolbar inflando la vista
-        Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar_main, rootChild, false);
+        // Obtenemos la Toolbar inflando la vista
+        Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar_settings, rootChild, false);
+        // Cambiamos el color del icono de navegacion de la Toolbar
+        bar.getNavigationIcon().setColorFilter(ContextCompat.getColor(this, android.R.color.primary_text_dark), PorterDuff.Mode.SRC_IN);
+        // Añadimos la navegacion
+        bar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        // La añadimos a la vista
         rootChild.addView(bar, 0);
+
     }
 
     /**
