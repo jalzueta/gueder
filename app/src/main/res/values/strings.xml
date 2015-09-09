@@ -13,4 +13,6 @@
     <string name="updated_preferences">Preferencias actualizadas</string>
     <string name="undo">Deshacer</string>
     <string name="city_example">Pamplona</string>
+    <string name="previous">Anterior</string>
+    <string name="next">Siguiente</string>
 </resources>

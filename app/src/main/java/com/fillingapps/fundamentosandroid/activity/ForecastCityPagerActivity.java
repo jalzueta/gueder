@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.fillingapps.fundamentosandroid.R;
+import com.fillingapps.fundamentosandroid.fragment.CityListFragment;
 import com.fillingapps.fundamentosandroid.fragment.CityPagerFragment;
 
 /**
@@ -24,8 +25,9 @@ public class ForecastCityPagerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FragmentManager fm = getFragmentManager();
-        if (fm.findFragmentById(R.id.fragment_citypager) == null){
-            fm.beginTransaction().add(R.id.fragment_citypager, CityPagerFragment.newInstance()).commit();
+        if (fm.findFragmentById(R.id.fragment) == null){
+            //fm.beginTransaction().add(R.id.fragment, CityPagerFragment.newInstance()).commit();
+            fm.beginTransaction().add(R.id.fragment, CityListFragment.newInstance()).commit();
         }
     }
 }
