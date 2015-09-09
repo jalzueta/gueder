@@ -67,7 +67,9 @@ public class CityPagerFragment extends Fragment{
         //Pillamos el Toolbar
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         // Actualizamos el titulo de la Toolbar
-        actionBar.setTitle(mCities.getCities().get(position).getName());
+        if (actionBar != null){
+            actionBar.setTitle(mCities.getCities().get(position).getName());
+        }
     }
 
     protected class CityPagerFragmentAdapter extends FragmentPagerAdapter {
