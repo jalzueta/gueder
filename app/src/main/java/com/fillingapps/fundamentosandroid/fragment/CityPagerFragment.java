@@ -63,7 +63,7 @@ public class CityPagerFragment extends Fragment{
         mCities = Cities.getInstance();
 
         mPager = (ViewPager) root.findViewById(R.id.view_pager);
-        mPager.setAdapter(new CityPagerFragmentAdapter(getFragmentManager()));
+        mPager.setAdapter(new CityPagerFragmentAdapter(getChildFragmentManager()));
 
         // Detectamos el cambio de fragment en el view pager
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -127,6 +127,7 @@ public class CityPagerFragment extends Fragment{
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             return true;
         }
+
         updateCityInfo();
         return super.onOptionsItemSelected(item);
     }
