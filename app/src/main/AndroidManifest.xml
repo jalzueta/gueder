@@ -15,6 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Para poder usar: NavUtils.navigateUpFromSameTask(this); -->
         <activity
             android:name=".activity.CityPagerActivity"
             android:label="@string/app_name"

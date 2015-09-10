@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 
 import com.fillingapps.fundamentosandroid.R;
 import com.fillingapps.fundamentosandroid.fragment.CityListFragment;
+import com.fillingapps.fundamentosandroid.fragment.CityPagerFragment;
 import com.fillingapps.fundamentosandroid.model.City;
 
 public class MainActivity extends AppCompatActivity implements CityListFragment.CityListListener{
@@ -18,21 +20,52 @@ public class MainActivity extends AppCompatActivity implements CityListFragment.
 
         setContentView(R.layout.activity_main);
 
+        // Codigo para ver caracteristicas del dispositivo
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        float density = metrics.density;
+        int dpWidth = (int) (width / density);
+        int dpHeight = (int) (height / density);
+
         // Asignamos la Toolbar como "ActionBar"
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FragmentManager fm = getFragmentManager();
-        if (fm.findFragmentById(R.id.fragment) == null){
-            fm.beginTransaction().add(R.id.fragment, CityListFragment.newInstance()).commit();
+        // Preguntamos si hay hueco para los fragments
+        if (findViewById(R.id.city_list) != null){
+            // Hay hueco, preguntamos si el fragment city_list ya lo teniamos o hay que crearlo
+            if (fm.findFragmentById(R.id.city_list) == null){
+                fm.beginTransaction().add(R.id.city_list, CityListFragment.newInstance()).commit();
+            }
+        }
+        // Preguntamos si hay hueco para los fragments
+        if (findViewById(R.id.city_pager) != null){
+            // Hay hueco, preguntamos si el fragment city_list ya lo teniamos o hay que crearlo
+            if (fm.findFragmentById(R.id.city_pager) == null){
+                fm.beginTransaction().add(R.id.city_pager, CityPagerFragment.newInstance(0)).commit();
+            }
         }
     }
 
     @Override
     public void onCitySelected(City city, int index) {
-        // lanzamos la activity del viewPager
-        Intent cityPagerIntent = new Intent(this, CityPagerActivity.class);
-        cityPagerIntent.putExtra(CityPagerActivity.EXTRA_CITY_INDEX, index);
-        startActivity(cityPagerIntent);
+
+        // Comprobamos si hay un CityPager en pantalla: miro a ver si existe el hueco
+        if (findViewById(R.id.city_pager) != null){
+            // Hay hueco para el cityPager
+            FragmentManager fm = getFragmentManager();
+            CityPagerFragment cityPagerFragment = (CityPagerFragment) fm.findFragmentById(R.id.city_pager);
+
+            // Cambiamos el sub-fragment del cityFragment
+            cityPagerFragment.goToCity(index);
+
+        }else{
+            // lanzamos la activity del viewPager
+            Intent cityPagerIntent = new Intent(this, CityPagerActivity.class);
+            cityPagerIntent.putExtra(CityPagerActivity.EXTRA_CITY_INDEX, index);
+            startActivity(cityPagerIntent);
+        }
     }
 }
