@@ -32,7 +32,6 @@ public class ForecastCityPagerActivity extends AppCompatActivity implements City
     @Override
     public void onCitySelected(City city, int index) {
         FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(R.id.fragment, CityPagerFragment.newInstance()).commit();
-        Toast.makeText(this, "Toast", Toast.LENGTH_LONG);
+        fm.beginTransaction().replace(R.id.fragment, CityPagerFragment.newInstance(index)).commit();
     }
 }

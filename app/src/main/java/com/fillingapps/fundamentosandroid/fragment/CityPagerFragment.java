@@ -20,11 +20,25 @@ import com.fillingapps.fundamentosandroid.model.Cities;
 
 public class CityPagerFragment extends Fragment{
 
+    // Esta es la clave del argumento que nos pasan a este fragment
+    private static final String ARG_CITY_INDEX = "cityIndex";
+
     private Cities mCities;
     private ViewPager mPager;
+    private int mInitialIndex; //Indice de la ciudad inicial a mostrar
 
-    public static CityPagerFragment newInstance() {
-        return new CityPagerFragment();
+    public static CityPagerFragment newInstance(int initialCityIndex) {
+        //Creamos el fragment
+        CityPagerFragment fragment = new CityPagerFragment();
+
+        // Nos creamos los argumentos y los empaquetamos
+        Bundle arguments = new Bundle();
+        arguments.putInt(ARG_CITY_INDEX, initialCityIndex);
+
+        //Asignamos los argumentos al fragment
+        fragment.setArguments(arguments);
+
+        return fragment;
     }
 
     @Override
@@ -32,6 +46,11 @@ public class CityPagerFragment extends Fragment{
         super.onCreate(savedInstanceState);
         // Con esto habilitamos el menu dentro del fragment. La Activity lo incorporará
         setHasOptionsMenu(true);
+
+        // Vemos si se reciben argumentos
+        if (getArguments() != null){
+            mInitialIndex = getArguments().getInt(ARG_CITY_INDEX);
+        }
     }
 
     @Nullable
@@ -65,10 +84,12 @@ public class CityPagerFragment extends Fragment{
         });
 
         // Cargamos el titulo de Toolbar al inicio del fragment
-        updateCityInfo(mPager.getCurrentItem());
+        goToCity(mInitialIndex);
 
         return root;
     }
+
+    // Metodos de navegacion por las cities
 
     protected void updateCityInfo() {
         updateCityInfo(mPager.getCurrentItem());
@@ -83,6 +104,13 @@ public class CityPagerFragment extends Fragment{
         }
     }
 
+    public void goToCity(int index) {
+        mPager.setCurrentItem(index);
+        updateCityInfo(index);
+    }
+
+    // Metodos de menu
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Le decimos que layout corresponde al menu
@@ -93,9 +121,11 @@ public class CityPagerFragment extends Fragment{
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.next) {
             mPager.setCurrentItem(mPager.getCurrentItem() + 1);
+            return true;
         }
-        else{
+        else if (item.getItemId() == R.id.previous){
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+            return true;
         }
         updateCityInfo();
         return super.onOptionsItemSelected(item);
