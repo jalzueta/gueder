@@ -65,7 +65,7 @@ public class CityPagerFragment extends Fragment{
 
         View root = inflater.inflate(R.layout.fragment_citypager, container, false);
 
-        mCities = Cities.getInstance();
+        mCities = Cities.getInstance(getActivity());
 
         mPager = (ViewPager) root.findViewById(R.id.view_pager);
         mPager.setAdapter(new CityPagerFragmentAdapter(getFragmentManager()));
@@ -161,7 +161,7 @@ public class CityPagerFragment extends Fragment{
         public CityPagerFragmentAdapter(FragmentManager fm) {
 
             super(fm);
-            mCities = Cities.getInstance();
+            mCities = Cities.getInstance(getActivity());
         }
 
         @Override

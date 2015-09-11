@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.View;
 
 import com.fillingapps.fundamentosandroid.R;
 import com.fillingapps.fundamentosandroid.fragment.CityListFragment;
 import com.fillingapps.fundamentosandroid.fragment.CityPagerFragment;
+import com.fillingapps.fundamentosandroid.model.Cities;
 import com.fillingapps.fundamentosandroid.model.City;
 
 public class MainActivity extends AppCompatActivity implements CityListFragment.CityListListener{
@@ -50,6 +53,18 @@ public class MainActivity extends AppCompatActivity implements CityListFragment.
                 int lastCityInde = prefs.getInt(CityPagerFragment.PREF_LAST_CITY, 0);
                 fm.beginTransaction().add(R.id.city_pager, CityPagerFragment.newInstance(lastCityInde)).commit();
             }
+        }
+
+        FloatingActionButton addCityButton = (FloatingActionButton) findViewById(R.id.add_city_button);
+        // Puede que no exista en todas las interfaces (tablet, movil...)
+        if (addCityButton != null){
+            addCityButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Cities cities = Cities.getInstance(MainActivity.this);
+                    cities.addCity(String.format("Ciudad %d", cities.getCities().size() + 1));
+                }
+            });
         }
     }
 

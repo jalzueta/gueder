@@ -30,7 +30,7 @@ public class CityListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View root = inflater.inflate(R.layout.fragment_city_list, container, false);
 
-        Cities cities = Cities.getInstance();
+        Cities cities = Cities.getInstance(getActivity());
         ListView list = (ListView) root.findViewById(android.R.id.list);
 
         final ArrayAdapter <City> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, cities.getCities());

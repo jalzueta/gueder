@@ -12,6 +12,10 @@ public class City implements Serializable{
         mForecast = forecast;
     }
 
+    public City(String name) {
+        this(name, new Forecast(30, 15, 20, "Sol con algunas nubes", "ico01"));
+    }
+
     public String getName() {
         return mName;
     }
