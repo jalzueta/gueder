@@ -2,7 +2,9 @@ package com.fillingapps.fundamentosandroid.activity;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -44,7 +46,9 @@ public class MainActivity extends AppCompatActivity implements CityListFragment.
         if (findViewById(R.id.city_pager) != null){
             // Hay hueco, preguntamos si el fragment city_list ya lo teniamos o hay que crearlo
             if (fm.findFragmentById(R.id.city_pager) == null){
-                fm.beginTransaction().add(R.id.city_pager, CityPagerFragment.newInstance(0)).commit();
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                int lastCityInde = prefs.getInt(CityPagerFragment.PREF_LAST_CITY, 0);
+                fm.beginTransaction().add(R.id.city_pager, CityPagerFragment.newInstance(lastCityInde)).commit();
             }
         }
     }
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements CityListFragment.
             FragmentManager fm = getFragmentManager();
             CityPagerFragment cityPagerFragment = (CityPagerFragment) fm.findFragmentById(R.id.city_pager);
 
-            // Cambiamos el sub-fragment del cityFragment
+            // Cambiamos el sub-fragment del cityPager
             cityPagerFragment.goToCity(index);
 
         }else{

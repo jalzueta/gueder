@@ -2,7 +2,9 @@ package com.fillingapps.fundamentosandroid.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,6 +21,9 @@ import com.fillingapps.fundamentosandroid.R;
 import com.fillingapps.fundamentosandroid.model.Cities;
 
 public class CityPagerFragment extends Fragment{
+
+    // Clave del diccionario de SharedPreferences
+    public static final String PREF_LAST_CITY = "com.fillingapps.fundamentosandroid.fragment.CityPagerFragment.PREF_LAST_CITY";
 
     // Esta es la clave del argumento que nos pasan a este fragment
     private static final String ARG_CITY_INDEX = "cityIndex";
@@ -102,6 +107,8 @@ public class CityPagerFragment extends Fragment{
         if (actionBar != null){
             actionBar.setTitle(mCities.getCities().get(position).getName());
         }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.edit().putInt(PREF_LAST_CITY, position).apply();
     }
 
     public void goToCity(int index) {

@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar_main" />
+    <include layout="@layout/toolbar_main"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_alignParentLeft="true"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentTop="true"/>
 
     <FrameLayout android:layout_width="match_parent"
                  android:layout_height="match_parent"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentRight="true"
+                 android:layout_alignParentBottom="true"
+                 android:layout_below="@+id/toolbar"
                  android:id="@+id/city_list">
 
     </FrameLayout>
 
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_city_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_plus"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:borderWidth="0dp"
+        app:elevation="@dimen/fav_elevation"
+        android:layout_margin="@dimen/fav_elevation"
+        />
+
+</RelativeLayout>
