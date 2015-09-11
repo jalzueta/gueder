@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,8 @@ import com.fillingapps.fundamentosandroid.model.Cities;
 import com.fillingapps.fundamentosandroid.model.City;
 
 public class MainActivity extends AppCompatActivity implements CityListFragment.CityListListener{
+
+    private FloatingActionButton mAddCityButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +59,10 @@ public class MainActivity extends AppCompatActivity implements CityListFragment.
             }
         }
 
-        FloatingActionButton addCityButton = (FloatingActionButton) findViewById(R.id.add_city_button);
+        mAddCityButton = (FloatingActionButton) findViewById(R.id.add_city_button);
         // Puede que no exista en todas las interfaces (tablet, movil...)
-        if (addCityButton != null){
-            addCityButton.setOnClickListener(new View.OnClickListener() {
+        if (mAddCityButton != null){
+            mAddCityButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Cities cities = Cities.getInstance(MainActivity.this);
@@ -70,7 +73,26 @@ public class MainActivity extends AppCompatActivity implements CityListFragment.
                             Snackbar.LENGTH_LONG).show();
                 }
             });
+            // Ocultamos el floatingButton para mostrarlo con una animacion
+            mAddCityButton.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Voy a hacer aparecer el boton despues de 2 segundos
+        Handler showAddButton = new Handler();
+        showAddButton.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mAddCityButton != null){
+                    // Muestra el boton con una animacion incluida
+                    mAddCityButton.show();
+                }
+            }
+        }, 2000);
     }
 
     @Override
