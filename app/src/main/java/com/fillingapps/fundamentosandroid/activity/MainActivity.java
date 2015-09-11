@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements CityListFragment.
                     Cities cities = Cities.getInstance(MainActivity.this);
                     cities.addCity(String.format("Ciudad %d", cities.getCities().size() + 1));
                     Snackbar.make(
-                            findViewById(android.R.id.content),
+                            findViewById(R.id.coordinator),
                             R.string.city_added,
                             Snackbar.LENGTH_LONG).show();
                 }
