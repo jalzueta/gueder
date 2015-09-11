@@ -2,11 +2,16 @@ package com.fillingapps.fundamentosandroid.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +26,8 @@ import com.fillingapps.fundamentosandroid.R;
 import com.fillingapps.fundamentosandroid.model.Cities;
 
 public class CityPagerFragment extends Fragment{
+
+    private CityBroadcastReceiver mBroadcastReceiver;
 
     // Clave del diccionario de SharedPreferences
     public static final String PREF_LAST_CITY = "com.fillingapps.fundamentosandroid.fragment.CityPagerFragment.PREF_LAST_CITY";
@@ -91,7 +98,19 @@ public class CityPagerFragment extends Fragment{
         // Cargamos el titulo de Toolbar al inicio del fragment
         goToCity(mInitialIndex);
 
+        mBroadcastReceiver = new CityBroadcastReceiver(mPager.getAdapter());
+        getActivity().registerReceiver(mBroadcastReceiver, new IntentFilter(Cities.CITY_LIST_CHANGED_ACTION));
+
         return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Me desuscribo de todas las notificaciones broadcast
+        getActivity().unregisterReceiver(mBroadcastReceiver);
+        mBroadcastReceiver = null;
     }
 
     // Metodos de navegacion por las cities
@@ -104,7 +123,7 @@ public class CityPagerFragment extends Fragment{
         //Pillamos el Toolbar
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         // Actualizamos el titulo de la Toolbar
-        if (actionBar != null){
+        if (actionBar != null && mCities.getCities().size() > 0){
             actionBar.setTitle(mCities.getCities().get(position).getName());
         }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -177,6 +196,21 @@ public class CityPagerFragment extends Fragment{
         @Override
         public CharSequence getPageTitle(int position) {
             return mCities.getCities().get(position).getName();
+        }
+    }
+
+    // Broadcast: esta clase se va a enterar de cuándo ha cambiado el modelo Cities
+    private class CityBroadcastReceiver extends BroadcastReceiver {
+        private PagerAdapter mAdapter;
+
+        public CityBroadcastReceiver (PagerAdapter adapter) {
+            super();
+            mAdapter = adapter;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mAdapter.notifyDataSetChanged();
         }
     }
 }

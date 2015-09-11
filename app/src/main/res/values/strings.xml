@@ -15,4 +15,5 @@
     <string name="city_example">Pamplona</string>
     <string name="previous">Anterior</string>
     <string name="next">Siguiente</string>
+    <string name="city_added">Ciudad añadida</string>
 </resources>
